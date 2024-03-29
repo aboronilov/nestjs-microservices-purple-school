@@ -1,6 +1,17 @@
 /* eslint-disable */
 export default {
   displayName: 'account',
+  // displayName: [
+  //   "account-config",
+  //   {
+  //     "color": "blue",
+  //     "name": "account-config"
+  //   }
+  // ],
+  // displayName: {
+  //   color: 'blue',
+  //   name: 'account-config',
+  // },
   preset: '../../jest.preset.js',
   testEnvironment: 'node',
   transform: {
