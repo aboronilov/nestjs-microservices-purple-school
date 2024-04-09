@@ -1,4 +1,9 @@
-import { IUser, IUserCourses, UserRole } from '@purple/interfaces';
+import {
+  IUser,
+  IUserCourses,
+  PurchaseState,
+  UserRole,
+} from '@purple/interfaces';
 import { compare, genSalt, hash } from 'bcryptjs';
 
 export class UserEntity implements IUser {
@@ -16,6 +21,32 @@ export class UserEntity implements IUser {
     this.email = user.email;
     this.role = user.role;
     this.courses = user.courses;
+  }
+
+  public addCourse(courseId: string) {
+    const courseExists = this.courses.find((item) => item._id === courseId);
+    if (courseExists) {
+      throw new Error(`Course with id ${courseId} already exists`);
+    }
+
+    this.courses.push({
+      courseId,
+      purchaseState: PurchaseState.Started,
+    });
+  }
+
+  public deleteCourse(courseId: string) {
+    this.courses = this.courses.filter((item) => item._id !== courseId);
+  }
+
+  public updateCourseStatus(courseId: string, status: PurchaseState) {
+    this.courses = this.courses.map((item) => {
+      if (item._id == courseId) {
+        item.purchaseState = status;
+        return item;
+      }
+      return item;
+    });
   }
 
   public async setPassword(password: string) {
