@@ -2,14 +2,15 @@ import { RMQService } from 'nestjs-rmq';
 import { UserEntity } from '../entities/user.entity';
 import { PurchaseState } from '@purple/interfaces';
 import { BuyCourseSagaState } from './buy-course.state';
+import { BuyCourseSagaStateStarted } from './buy-courses.steps';
 
 export class BuyCourseSaga {
   private state: BuyCourseSagaState;
 
   constructor(
-    private user: UserEntity,
-    private courseId: string,
-    private rmqService: RMQService
+    public user: UserEntity,
+    public courseId: string,
+    public rmqService: RMQService
   ) {}
 
   getState() {
@@ -19,6 +20,7 @@ export class BuyCourseSaga {
   setState(state: PurchaseState, courseId: string) {
     switch (state) {
       case PurchaseState.Started:
+        this.state = new BuyCourseSagaStateStarted();
         break;
       case PurchaseState.WaitingForPayment:
         break;
