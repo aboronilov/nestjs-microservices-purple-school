@@ -11,4 +11,6 @@ export namespace AccountChangeProfile {
     @IsString()
     user!: Pick<IUser, 'displayName'>;
   }
+
+  export class Response {}
 }

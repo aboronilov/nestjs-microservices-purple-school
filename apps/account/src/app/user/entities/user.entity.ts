@@ -23,30 +23,29 @@ export class UserEntity implements IUser {
     this.courses = user.courses;
   }
 
-  public addCourse(courseId: string) {
+  public setCourseStatus(courseId: string, state: PurchaseState) {
     const courseExists = this.courses.find((item) => item._id === courseId);
-    if (courseExists) {
-      throw new Error(`Course with id ${courseId} already exists`);
+    if (!courseExists) {
+      this.courses.push({
+        courseId,
+        purchaseState: PurchaseState.Started,
+      });
+      return this;
     }
 
-    this.courses.push({
-      courseId,
-      purchaseState: PurchaseState.Started,
-    });
-  }
+    if (state === PurchaseState.Canceled) {
+      this.courses = this.courses.filter((item) => item._id !== courseId);
+      return this;
+    }
 
-  public deleteCourse(courseId: string) {
-    this.courses = this.courses.filter((item) => item._id !== courseId);
-  }
-
-  public updateCourseStatus(courseId: string, status: PurchaseState) {
     this.courses = this.courses.map((item) => {
       if (item._id == courseId) {
-        item.purchaseState = status;
+        item.purchaseState = state;
         return item;
       }
       return item;
     });
+    return this;
   }
 
   public async setPassword(password: string) {

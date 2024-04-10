@@ -1,3 +1,4 @@
+import { PaymentStatus } from '@purple/contracts';
 import { UserEntity } from '../entities/user.entity';
 import { BuyCourseSaga } from './buy-course.saga';
 
@@ -10,7 +11,10 @@ export abstract class BuyCourseSagaState {
 
   public abstract pay(): Promise<{ paymentLink: string; user: UserEntity }>;
 
-  public abstract checkPayment(): Promise<{ user: UserEntity }>;
+  public abstract checkPayment(): Promise<{
+    user: UserEntity;
+    status: PaymentStatus;
+  }>;
 
   public abstract cancel(): Promise<{ user: UserEntity }>;
 }
