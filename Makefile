@@ -8,3 +8,9 @@ create_rabbitmq:
 
 run_all:
 	nx run-many --target=serve --all --parallel=10
+
+test_account:
+	nx run test account
+
+all_tests:
+	nx run-many --target=test --all --parallel=10
