@@ -10,7 +10,7 @@ run_all:
 	nx run-many --target=serve --all --parallel=10
 
 test_account:
-	nx run test account
+	nx run test account --skip-nx-cache
 
 all_tests:
-	nx run-many --target=test --all --parallel=10
+	nx run-many --target=test --all --skip-nx-cache --parallel=10
